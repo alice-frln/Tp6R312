@@ -1,0 +1,43 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PlotFigure from "../../components/PlotFigure.astro";
+import carsCsv from "../../assets/cars.csv?raw";
+import { autoType, csvParse } from "d3-dsv";
+import * as Plot from "@observablehq/plot";
+
+const cars = csvParse(carsCsv, autoType);
+const years = [...new Set(cars.map((car) => car.year))].sort();
+---
+
+<Layout>
+  <h1 class="mb-5 font-['Newsreader',Georgia,serif] text-[34px] font-semibold leading-[1.12] text-[#183d34] sm:text-[42px]">Graphiques des voitures par année</h1>
+  {years.map((year) => (
+    <section class="mt-8 border-t border-[#d7e0d9] pt-6">
+      <h2 class="mb-3.5 font-['Newsreader',Georgia,serif] text-[23px] font-semibold leading-tight text-[#183d34] sm:text-[26px]">Voitures {year}</h2>
+      <PlotFigure
+        options={{
+          grid: true,
+          marks: [
+            Plot.dot(
+              cars.filter((car) => car.year === year),
+              {
+                x: "weight (lb)",
+                y: "power (hp)",
+                fill: "steelblue",
+                r: 4,
+                fillOpacity: 0.7,
+              },
+            ),
+          ],
+          x: {
+            label: "Poids (lb)",
+          },
+          y: {
+            label: "Puissance (hp)",
+          },
+          title: `Relation Puissance vs Poids - Voitures ${year}`,
+        }}
+      />
+    </section>
+  ))}
+</Layout>

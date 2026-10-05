@@ -1,26 +1,67 @@
 ---
 import "../styles/global.css";
+
+const links = [
+  { label: "Pingouins", href: "/" },
+  { label: "Espèces dynamiques", href: "/rendu-dynamique/" },
+  { label: "Espèces statiques", href: "/rendu-statique/" },
+  { label: "Voitures", href: "/cars/" },
+  { label: "Années dynamiques", href: "/cars/year/" },
+  { label: "Années statiques", href: "/rendu-statique/cars/" },
+];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="fr" class="min-w-[320px] scroll-smooth bg-[#f2f5f0] text-[#1d2c27]">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
+    <meta name="theme-color" content="#183d34" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Tracés | Atelier de données</title>
   </head>
-  <body>
-    <slot />
+  <body class="m-0 font-['DM_Sans',sans-serif] text-base leading-[1.55]">
+    <header class="relative z-20 border-b-4 border-[#e6bd66] bg-[#183d34] text-[#f5f7f2]">
+      <div class="mx-auto flex min-h-[92px] max-w-[1320px] flex-col items-start justify-between gap-4 px-[18px] py-4 lg:flex-row lg:items-center lg:gap-6 lg:px-7">
+        <a class="inline-flex shrink-0 items-center gap-3 no-underline" href="/">
+          <span class="grid size-11 place-items-center bg-[#e6bd66] text-[13px] font-bold text-[#183d34]" aria-hidden="true">TD</span>
+          <span class="grid leading-[1.1]">
+            <span class="font-['Newsreader',Georgia,serif] text-[27px] font-semibold">Tracés</span>
+            <span class="mt-[5px] text-[11px] text-[#c0d0c7]">Atelier de données</span>
+          </span>
+        </a>
+        <nav class="flex flex-wrap items-center justify-start gap-x-1 gap-y-0.5 lg:justify-end" aria-label="Navigation principale">
+          {links.map(({ label, href }) => (
+            <a
+              href={href}
+              class:list={[
+                "rounded-sm px-2 py-2 text-[12px] font-semibold no-underline transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e6bd66] sm:px-2.5 sm:text-[13px]",
+                Astro.url.pathname === href
+                  ? "bg-white/10 text-white"
+                  : "text-[#e2ebe5]",
+              ]}
+              aria-current={Astro.url.pathname === href ? "page" : undefined}
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <main id="contenu" class="mx-auto min-h-[calc(100vh-168px)] w-[calc(100%-36px)] max-w-[1160px] py-9 sm:w-[calc(100%-56px)] sm:py-12 sm:pb-[76px]">
+      <slot />
+    </main>
+    <footer class="bg-[#183d34] text-[#dce7e0]">
+      <div class="mx-auto max-w-[1320px] px-[18px] py-[15px] text-xs sm:px-7 sm:py-4">
+        Visualisations · Astro &amp; Observable Plot
+      </div>
+    </footer>
   </body>
 </html>
-
-<style>
-  html,
-  body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-  }
-</style>

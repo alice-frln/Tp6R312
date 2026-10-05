@@ -1,0 +1,19 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import carsCsv from "../../../assets/cars.csv?raw";
+import { autoType, csvParse } from "d3-dsv";
+
+const cars = csvParse(carsCsv, autoType);
+const years = [...new Set(cars.map((car) => car.year))].sort();
+---
+
+<Layout>
+  <h1 class="mb-5 font-['Newsreader',Georgia,serif] text-[34px] font-semibold leading-[1.12] text-[#183d34] sm:text-[42px]">Années des voitures</h1>
+  <ul class="mt-7 grid max-w-[900px] grid-cols-1 gap-2.5 p-0 sm:grid-cols-2 lg:grid-cols-3">
+    {years.map((year) => (
+      <li class="min-w-0 list-none">
+        <a class="flex min-h-[54px] items-center justify-between gap-3 border border-[#d7e0d9] border-l-[3px] border-l-[#2d725b] bg-white px-[15px] py-[13px] font-semibold text-[#183d34] no-underline transition hover:translate-x-0.5 hover:border-l-[#d66e52] hover:text-[#a94e38]" href={`/rendu-statique/cars/${year}`}>Année : {year}</a>
+      </li>
+    ))}
+  </ul>
+</Layout>

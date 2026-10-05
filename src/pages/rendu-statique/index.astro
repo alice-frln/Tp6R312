@@ -6,10 +6,10 @@ const species = [...new Set(penguins.map((penguin) => penguin.species))];
 ---
 
 <Layout>
-  <h1 class="text-2xl">Espèces de pingouins</h1>
-  <ul>
+  <h1 class="mb-5 font-['Newsreader',Georgia,serif] text-[34px] font-semibold leading-[1.12] text-[#183d34] sm:text-[42px]">Espèces de pingouins</h1>
+  <ul class="mt-7 grid max-w-[900px] grid-cols-1 gap-2.5 p-0 sm:grid-cols-2 lg:grid-cols-3">
     {species.map((speciesName) => (
-      <li><a href={`/rendu-statique/${speciesName}`}>{speciesName}</a></li>
+      <li class="min-w-0 list-none"><a class="flex min-h-[54px] items-center justify-between gap-3 border border-[#d7e0d9] border-l-[3px] border-l-[#2d725b] bg-white px-[15px] py-[13px] font-semibold text-[#183d34] no-underline transition hover:translate-x-0.5 hover:border-l-[#d66e52] hover:text-[#a94e38]" href={`/rendu-statique/${speciesName}`}>{speciesName}</a></li>
     ))}
   </ul>
 </Layout>
