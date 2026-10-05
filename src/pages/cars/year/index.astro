@@ -1,0 +1,15 @@
+---
+import carsCsv from "../../../assets/cars.csv?raw";
+import { autoType, csvParse } from "d3-dsv";
+
+const cars = csvParse(carsCsv, autoType);
+const years = [...new Set(cars.map((car) => car.year))].sort();
+---
+
+<ul>
+  {years.map((year) => (
+    <li>
+      <a href={`/cars/year/${year}`}>Année : {year}</a>
+    </li>
+  ))}
+</ul>

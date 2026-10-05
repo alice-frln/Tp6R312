@@ -1,0 +1,31 @@
+---
+export const prerender = false;
+
+import Layout from "../../layouts/Layout.astro";
+import PlotFigure from "../../components/PlotFigure.astro";
+import * as Plot from "@observablehq/plot";
+import penguins from "../../assets/penguins.json";
+
+const { species } = Astro.params;
+const speciesNames = new Set(penguins.map((penguin) => penguin.species));
+
+if (!species || !speciesNames.has(species)) {
+  return Astro.redirect("/rendu-dynamique/");
+}
+
+const speciesPenguins = penguins.filter((penguin) => penguin.species === species);
+---
+
+<Layout>
+  <h1 class="text-2xl">{species}</h1>
+  <PlotFigure
+    options={{
+      marks: [
+        Plot.dot(speciesPenguins, {
+          x: "culmen_length_mm",
+          y: "culmen_depth_mm",
+        }),
+      ],
+    }}
+  />
+</Layout>
